@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Linux-C",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/opt/vlab/share/verilator/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        },
+        {
+            "name": "Linux-Cpp",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/opt/vlab/share/verilator/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,13 @@
+Language: Cpp
+
+# 构造函数的初始化列表的缩进宽度
+ConstructorInitializerIndentWidth: 4
+
+# 延续的行的缩进宽度
+ContinuationIndentWidth: 4
+
+# tab宽度
+TabWidth: 4
+
+# 缩进宽度
+IndentWidth: 4
