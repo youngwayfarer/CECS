@@ -36,6 +36,7 @@ reg_t trap_handler(reg_t epc, reg_t cause)
 		printf("Sync exceptions! Code = %ld\n", cause_code);
 		panic("OOPS! What can I do!");
 		//return_pc += 4;
+		// +=4, will skip "*(int *)0x00000000 = 100;", to "uart_puts("Yeah! I'm return back from trap!\n");"
 	}
 
 	return return_pc;
@@ -47,6 +48,8 @@ void trap_test()
 	 * Synchronous exception code = 7
 	 * Store/AMO access fault
 	 */
+	// 0x00000000:rom
+	// can't write, result to exception
 	*(int *)0x00000000 = 100;
 
 	/*
