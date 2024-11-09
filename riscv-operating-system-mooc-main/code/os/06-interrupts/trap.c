@@ -8,22 +8,23 @@ void trap_init()
 	/*
 	 * set the trap-vector base-address for machine-mode
 	 */
-	w_mtvec((reg_t)trap_vector);
+    w_mtvec((reg_t)trap_vector);
+    printf("trap_init done\n");
 }
 
 void external_interrupt_handler()
 {
-	int irq = plic_claim();
+    int irq = plic_claim();
 
-	if (irq == UART0_IRQ){
-      		uart_isr();
-	} else if (irq) {
-		printf("unexpected interrupt irq = %d\n", irq);
-	}
-	
-	if (irq) {
-		plic_complete(irq);
-	}
+    if (irq == UART0_IRQ) {
+        uart_isr();
+    } else if (irq) {
+        printf("unexpected interrupt irq = %d\n", irq);
+    }
+
+    if (irq) {
+        plic_complete(irq);
+    }
 }
 
 reg_t trap_handler(reg_t epc, reg_t cause)

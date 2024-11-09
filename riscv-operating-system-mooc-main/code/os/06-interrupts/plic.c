@@ -1,9 +1,13 @@
 #include "os.h"
+#include "types.h"
 
-void plic_init(void)
-{
+void plic_init(void) {
+	printf("plic_init start\n");
+
 	int hart = r_tp();
-  
+
+	printf("1\n");
+
 	/* 
 	 * Set priority for UART0.
 	 *
@@ -18,7 +22,9 @@ void plic_init(void)
 	 * effective priority.
 	 */
 	*(uint32_t*)PLIC_PRIORITY(UART0_IRQ) = 1;
- 
+
+	printf("2\n");
+
 	/*
 	 * Enable UART0
 	 *
@@ -26,6 +32,11 @@ void plic_init(void)
 	 * bit in the enables registers.
 	 */
 	*(uint32_t*)PLIC_MENABLE(hart, UART0_IRQ)= (1 << (UART0_IRQ % 32));
+
+	// Enable UART0 transmit interrupt
+	*(uint32_t*)PLIC_MENABLE(hart, UART0_IRQ) |= (1 << (UART0_IRQ % 32));
+
+	printf("3\n");
 
 	/* 
 	 * Set priority threshold for UART0.
@@ -38,11 +49,17 @@ void plic_init(void)
 	 */
 	*(uint32_t*)PLIC_MTHRESHOLD(hart) = 0;
 
+	printf("4\n");
+
 	/* enable machine-mode external interrupts. */
 	w_mie(r_mie() | MIE_MEIE);
 
-	/* enable machine-mode global interrupts. */
-	w_mstatus(r_mstatus() | MSTATUS_MIE);
+	printf("5\n");
+
+    /* enable machine-mode global interrupts. */
+    w_mstatus(r_mstatus() | MSTATUS_MIE);
+
+    printf("plic_init done\n");
 }
 
 /* 
