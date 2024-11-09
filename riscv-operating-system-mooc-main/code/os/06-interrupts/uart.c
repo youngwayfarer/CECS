@@ -109,8 +109,9 @@ void uart_init()
 	uint8_t ier = uart_read_reg(IER);
     uart_write_reg(IER, ier | (1 << 0));
 
-    ier = uart_read_reg(IER);
-    uart_write_reg(IER, ier | (1 << 1));
+	//! this will lead to the stuck in "w_mstatus(r_mstatus() | MSTATUS_MIE);" in plic.c 
+    // ier = uart_read_reg(IER);
+    // uart_write_reg(IER, ier | (1 << 1));
 }
 
 int uart_putc(char ch)
