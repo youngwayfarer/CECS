@@ -107,7 +107,10 @@ void uart_init()
 	 * enable receive interrupts.
 	 */
 	uint8_t ier = uart_read_reg(IER);
-	uart_write_reg(IER, ier | (1 << 0));
+    uart_write_reg(IER, ier | (1 << 0));
+
+    ier = uart_read_reg(IER);
+    uart_write_reg(IER, ier | (1 << 1));
 }
 
 int uart_putc(char ch)
@@ -135,7 +138,14 @@ int uart_getc(void)
  */
 void uart_isr(void)
 {
-	uart_putc((char)uart_getc());
-	/* add a new line just to look better */
-	uart_putc('\n');
+    uint8_t isr = uart_read_reg(ISR);
+    if ((isr & 0x0f) == 0x04) {
+		uart_putc((char)uart_getc());
+        uart_putc('\n');
+    }
+
+    if ((isr & 0x0f) == 0x02) {
+		uart_puts("Transmit interrupt!\n");
+		uart_putc('\n');
+	}
 }

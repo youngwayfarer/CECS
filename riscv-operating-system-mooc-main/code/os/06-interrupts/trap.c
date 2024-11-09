@@ -14,6 +14,7 @@ void trap_init()
 
 void external_interrupt_handler()
 {
+	printf("external_interrupt_handler\n");
     int irq = plic_claim();
 
     if (irq == UART0_IRQ) {
@@ -30,7 +31,9 @@ void external_interrupt_handler()
 reg_t trap_handler(reg_t epc, reg_t cause)
 {
 	reg_t return_pc = epc;
-	reg_t cause_code = cause & MCAUSE_MASK_ECODE;
+    reg_t cause_code = cause & MCAUSE_MASK_ECODE;
+
+    printf("trap_handler\n");
 	
 	if (cause & MCAUSE_MASK_INTERRUPT) {
 		/* Asynchronous trap - interrupt */
