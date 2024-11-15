@@ -26,7 +26,9 @@ void start_kernel(void)
 
 	timer_init();
 
-	sched_init();
+    sched_init();
+
+    printf("00:00:00\n");
 
 	os_main();
 

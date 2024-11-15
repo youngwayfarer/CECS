@@ -32,7 +32,38 @@ void timer_init()
 void timer_handler() 
 {
 	_tick++;
-	printf("tick: %d\n", _tick);
+    // printf("tick: %d\n", _tick);
+
+    uint32_t seconds = _tick;
+
+    uint32_t hours = seconds / 3600;
+    seconds = seconds % 3600;
+
+    uint32_t minutes = seconds / 60;
+    seconds = seconds % 60;
+
+    // printf("%02d:%02d:%02d\n", hours, minutes, seconds);
+
+    if (hours < 10) {
+		uart_putc('0');
+    }
+    printf("%d", hours);
+
+    printf(":");
+
+    if (minutes < 10) {
+		uart_putc('0');
+	}
+	printf("%d", minutes);
+
+	printf(":");
+
+	if (seconds < 10) {
+		uart_putc('0');
+	}
+	printf("%d", seconds);
+
+	uart_putc('\n');
 
 	timer_load(TIMER_INTERVAL);
 }
